@@ -25,19 +25,29 @@ The base cases occur when the sublists are either empty or have one element, as 
 
 
 def quicksort(numbers_in_a_list):
-
+    print(numbers_in_a_list)
 #WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
-
-    return #WHAT DOES IT RETURN?
+    sorted_numbers_in_a_list = list()
+    
+    return sorted_numbers_in_a_list
 
 
 def main():
-
+    import csv
 # WRITE YOUR MAIN FUNCTION HERE TO READ IN YOUR numbers.txt FILE, RUN THE LIST THROUGH YOUR SORTING ALGORITHM, 
 # AND WRITE OUT YOUR FILE
+    with open("numbers.txt","r") as f:
+        reader = csv.reader(f, delimiter =',',skipinitialspace=True)
+        for row in reader:
+            print(row)
 
-    return #WHAT DOES IT RETURN?
-
+    #listOfNums = f.read() 
+   # print(listOfNums[0])
+   # print(listOfNums[-1])
+   # print(len(listOfNums))
+    #quicksort(listOfNums,0,len(listOfNums))
+    #file1.close()
+    #return #WHAT DOES IT RETURN?
 
 if __name__ == "__main__":
     main()
