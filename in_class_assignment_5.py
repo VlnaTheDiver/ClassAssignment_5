@@ -22,32 +22,63 @@ The steps of the algorithm are as follows:
 
 The base cases occur when the sublists are either empty or have one element, as these are inherently sorted. 
  '''
+#SOLUTION FOUND VIA https://www.geeksforgeeks.org/python-program-for-quicksort/
+
+import numbers
 
 
-def quicksort(numbers_in_a_list):
-    print(numbers_in_a_list)
-#WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
-    sorted_numbers_in_a_list = list()
+def partition(numbers_in_a_list,low,high):
+
+    #CHOOSE THE RIGHTMOST ELEMENT AS PIVOT
+    pivot = numbers_in_a_list[high]
+    i = low -1
+
+    for j in range(low,high):
+        if numbers_in_a_list[j] <= pivot:
+            i = i + 1
+
+        #SWAPPING ELEMENT AT i WITH ELEMENT AT j
+            (numbers_in_a_list[i],numbers_in_a_list[j]) = (numbers_in_a_list[j], numbers_in_a_list[i])
+        
+        #SWAP THE PIVOT ELEMENT WITH THE GREATER ELEMENT SPECIFIED BY i
+    (numbers_in_a_list[i+1], numbers_in_a_list[high]) = (numbers_in_a_list[high], numbers_in_a_list[i + 1])
     
-    return sorted_numbers_in_a_list
+    #RETURN THE POSITION FROM WHERE THE PARTITION IS DONE
+    return i + 1
 
+def quicksort(numbers_in_a_list, low, high):
+#WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
+    if low < high:
+        pi = partition(numbers_in_a_list,low,high)
+        quicksort(numbers_in_a_list,low,pi - 1)
+        quicksort(numbers_in_a_list,pi + 1, high)
+    return numbers_in_a_list
 
 def main():
-    import csv
 # WRITE YOUR MAIN FUNCTION HERE TO READ IN YOUR numbers.txt FILE, RUN THE LIST THROUGH YOUR SORTING ALGORITHM, 
 # AND WRITE OUT YOUR FILE
-    with open("numbers.txt","r") as f:
-        reader = csv.reader(f, delimiter =',',skipinitialspace=True)
-        for row in reader:
-            print(row)
+    global sorted_numbers_in_a_list
+    sorted_numbers_in_a_list = list()
+    unsorted_list = []
 
-    #listOfNums = f.read() 
-   # print(listOfNums[0])
-   # print(listOfNums[-1])
-   # print(len(listOfNums))
-    #quicksort(listOfNums,0,len(listOfNums))
-    #file1.close()
-    #return #WHAT DOES IT RETURN?
+    f = open("numbers.txt","r")
+    data = f.read()
+    str_list = data.replace("[","").replace("]","").replace(" ","").split(",")
+
+    for element in str_list:
+            unsorted_list.append(int(element))
+
+    print(f"This is the unsorted list:\n {unsorted_list}")
+    size = len(unsorted_list)
+
+    quicksort(unsorted_list,0,size - 1)
+    print(f"\nThis is the sorted list:\n {unsorted_list}")
+
+    #Output sorted list to .txt file
+    with open(r"sorted.txt","x") as outF:
+        outF.write(",".join(str(item) for item in unsorted_list))
+    outF.close()
+    return outF
 
 if __name__ == "__main__":
     main()
